@@ -5,11 +5,13 @@ import logger from "morgan";
 import passport from "passport";
 import session from "express-session";
 import sessionFileStore from "session-file-store";
+import expressPromiseRouter from "express-promise-router";
 
 import { SESSION_SECRET, CLIENT_SCOPES } from "./constants.js";
 import { initializeAuth } from "./auth.js";
 
 const app = express();
+const router = expressPromiseRouter();
 
 app.set("views", "views");
 app.set("view engine", "ejs");
@@ -31,8 +33,9 @@ app.use(express.static("public"));
 app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(router);
 
-app.get("/", function (req, res, next) {
+router.get("/", function (req, res, next) {
   if (!req.user || !req.isAuthenticated()) {
     res.redirect("/auth/google");
   } else {
@@ -40,7 +43,7 @@ app.get("/", function (req, res, next) {
   }
 });
 
-app.get("/logout", (req, res, next) => {
+router.get("/logout", (req, res, next) => {
   req.logout((err) => {
     if (err) {
       return next(err);
@@ -51,7 +54,7 @@ app.get("/logout", (req, res, next) => {
   });
 });
 
-app.get(
+router.get(
   "/auth/google",
   passport.authenticate("google", {
     scope: CLIENT_SCOPES,
@@ -60,7 +63,7 @@ app.get(
   })
 );
 
-app.get(
+router.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/",
@@ -75,11 +78,11 @@ app.get(
   }
 );
 
-app.use(function (req, res, next) {
+router.use(function (req, res, next) {
   next(createError(404));
 });
 
-app.use(function (err, req, res, next) {
+router.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
   res.locals.status = res.locals.error.status ?? 500;
