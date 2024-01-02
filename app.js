@@ -35,7 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(router);
 
-router.get("/", function (req, res, next) {
+router.get("/", function (req, res) {
   if (!req.user || !req.isAuthenticated()) {
     res.redirect("/auth/google");
   } else {
