@@ -1,7 +1,7 @@
-const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } = require("./constants");
-const { Strategy: GoogleOAuthStrategy } = require("passport-google-oauth20");
+import { Strategy as GoogleOAuthStrategy } from "passport-google-oauth20";
+import { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } from "./constants.js";
 
-module.exports.auth = (passport) => {
+export const auth = (passport) => {
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser((user, done) => done(null, user));
   passport.use(

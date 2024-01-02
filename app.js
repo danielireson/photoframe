@@ -1,18 +1,17 @@
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const passport = require("passport");
-const session = require("express-session");
-const sessionFileStore = require("session-file-store");
+import createError from "http-errors";
+import express from "express";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import passport from "passport";
+import session from "express-session";
+import sessionFileStore from "session-file-store";
 
-const { SESSION_SECRET, CLIENT_SCOPES } = require("./constants");
-const { auth } = require("./auth");
+import { SESSION_SECRET, CLIENT_SCOPES } from "./constants.js";
+import { auth } from "./auth.js";
 
 const app = express();
 
-app.set("views", path.join(__dirname, "views"));
+app.set("views", "views");
 app.set("view engine", "ejs");
 
 auth(passport);
@@ -28,7 +27,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
@@ -89,4 +88,4 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+export default app;
