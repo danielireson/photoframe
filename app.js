@@ -70,9 +70,12 @@ router.get(
     failureFlash: true,
     session: true,
   }),
-  (req, res) => {
-    console.log("User has logged in.");
-    req.session.save(() => {
+  (req, res, next) => {
+    req.session.save((err) => {
+      if (err) {
+        return next(err);
+      }
+
       res.redirect("/");
     });
   }
