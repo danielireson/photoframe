@@ -51,7 +51,7 @@ app.use(cookieParser());
 app.use(express.static("public"));
 app.use(router);
 
-router.get("/", function (req, res) {
+router.get("/", (req, res) => {
   if (!req.user || !req.isAuthenticated()) {
     res.redirect("/auth/google");
   } else {
@@ -97,11 +97,11 @@ router.get(
   }
 );
 
-router.use(function (req, res, next) {
-  next(createError(404));
+router.use(async () => {
+  throw new createError(404);
 });
 
-router.use(function (err, req, res, next) {
+router.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
   res.locals.status = res.locals.error.status ?? 500;
