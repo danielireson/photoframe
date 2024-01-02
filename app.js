@@ -37,7 +37,7 @@ app.get("/", function (req, res, next) {
   if (!req.user || !req.isAuthenticated()) {
     res.redirect("/auth/google");
   } else {
-    res.render("index", { title: "Express" });
+    res.render("index", { title: "Photoframe" });
   }
 });
 
