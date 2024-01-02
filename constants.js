@@ -3,6 +3,11 @@ module.exports.CLIENT_ID =
 
 module.exports.CLIENT_SECRET = "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";
 
+module.exports.CLIENT_SCOPES = [
+  "https://www.googleapis.com/auth/userinfo.profile",
+  "https://www.googleapis.com/auth/photoslibrary.readonly",
+];
+
 module.exports.CALLBACK_URL = "http://localhost:3000/auth/google/callback";
 
 module.exports.SESSION_SECRET = "179d8801-8aa7-45d1-935a-852905c28ab5";

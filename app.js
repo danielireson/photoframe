@@ -7,7 +7,7 @@ const passport = require("passport");
 const session = require("express-session");
 const sessionFileStore = require("session-file-store");
 
-const { SESSION_SECRET } = require("./constants");
+const { SESSION_SECRET, CLIENT_SCOPES } = require("./constants");
 const { auth } = require("./auth");
 
 const app = express();
@@ -27,7 +27,7 @@ const sessionMiddleware = session({
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(sessionMiddleware);
@@ -35,8 +35,47 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
+  if (!req.user || !req.isAuthenticated()) {
+    res.redirect("/auth/google");
+  } else {
+    res.render("index", { title: "Express" });
+  }
 });
+
+app.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+
+    req.session.destroy();
+    res.redirect("/");
+  });
+});
+
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: CLIENT_SCOPES,
+    failureFlash: true,
+    session: true,
+  })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/",
+    failureFlash: true,
+    session: true,
+  }),
+  (req, res) => {
+    console.log("User has logged in.");
+    req.session.save(() => {
+      res.redirect("/");
+    });
+  }
+);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
