@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 
 import { initializeAuth } from "./auth.js";
-import { initializeRouter } from "./routes.js";
+import { initializeRouter } from "./router.js";
 
 const app = express();
 
