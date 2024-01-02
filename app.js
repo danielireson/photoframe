@@ -9,11 +9,12 @@ import expressPromiseRouter from "express-promise-router";
 import { Strategy as GoogleOAuthStrategy } from "passport-google-oauth20";
 
 import {
+  APP_NAME,
   CLIENT_ID,
   CLIENT_SECRET,
+  CLIENT_SCOPES,
   CALLBACK_URL,
   SESSION_SECRET,
-  CLIENT_SCOPES,
 } from "./constants.js";
 
 const app = express();
@@ -55,7 +56,7 @@ router.get("/", (req, res) => {
   if (!req.user || !req.isAuthenticated()) {
     res.redirect("/auth/google");
   } else {
-    res.render("index", { title: "Photoframe" });
+    res.render("index", { title: APP_NAME });
   }
 });
 

@@ -1,3 +1,5 @@
+export const APP_NAME = "Photoframe";
+
 export const CLIENT_ID =
   "1075318808789-9krgr2m5kvu62gklvapvhbk5gp2550it.apps.googleusercontent.com";
 
