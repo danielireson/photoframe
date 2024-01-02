@@ -6,9 +6,15 @@ import passport from "passport";
 import session from "express-session";
 import sessionFileStore from "session-file-store";
 import expressPromiseRouter from "express-promise-router";
+import { Strategy as GoogleOAuthStrategy } from "passport-google-oauth20";
 
-import { SESSION_SECRET, CLIENT_SCOPES } from "./constants.js";
-import { initializeAuth } from "./auth.js";
+import {
+  CLIENT_ID,
+  CLIENT_SECRET,
+  CALLBACK_URL,
+  SESSION_SECRET,
+  CLIENT_SCOPES,
+} from "./constants.js";
 
 const app = express();
 const router = expressPromiseRouter();
@@ -16,23 +22,33 @@ const router = expressPromiseRouter();
 app.set("views", "views");
 app.set("view engine", "ejs");
 
-initializeAuth(passport);
-
-const sessionMiddleware = session({
-  resave: true,
-  saveUninitialized: true,
-  store: new sessionFileStore(session)({}),
-  secret: SESSION_SECRET,
-});
-
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+passport.use(
+  new GoogleOAuthStrategy(
+    {
+      clientID: CLIENT_ID,
+      clientSecret: CLIENT_SECRET,
+      callbackURL: CALLBACK_URL,
+    },
+    (token, refreshToken, profile, done) => done(null, { profile, token })
+  )
+);
+app.use(
+  session({
+    resave: true,
+    saveUninitialized: true,
+    store: new sessionFileStore(session)({}),
+    secret: SESSION_SECRET,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use(sessionMiddleware);
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(router);
 
 router.get("/", function (req, res) {
