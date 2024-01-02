@@ -7,14 +7,14 @@ import session from "express-session";
 import sessionFileStore from "session-file-store";
 
 import { SESSION_SECRET, CLIENT_SCOPES } from "./constants.js";
-import { auth } from "./auth.js";
+import { initializeAuth } from "./auth.js";
 
 const app = express();
 
 app.set("views", "views");
 app.set("view engine", "ejs");
 
-auth(passport);
+initializeAuth(passport);
 
 const sessionMiddleware = session({
   resave: true,

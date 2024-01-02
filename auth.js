@@ -1,7 +1,7 @@
 import { Strategy as GoogleOAuthStrategy } from "passport-google-oauth20";
 import { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL } from "./constants.js";
 
-export const auth = (passport) => {
+export const initializeAuth = (passport) => {
   passport.serializeUser((user, done) => done(null, user));
   passport.deserializeUser((user, done) => done(null, user));
   passport.use(
