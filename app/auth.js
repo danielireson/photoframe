@@ -3,12 +3,7 @@ import session from "express-session";
 import sessionFileStore from "session-file-store";
 import { Strategy as GoogleOAuthStrategy } from "passport-google-oauth20";
 
-import {
-  CLIENT_ID,
-  CLIENT_SECRET,
-  CALLBACK_URL,
-  SESSION_SECRET,
-} from "../constants.js";
+const { CLIENT_ID, CLIENT_SECRET, CALLBACK_URL, SESSION_SECRET } = process.env;
 
 passport.serializeUser((user, done) => done(null, user));
 

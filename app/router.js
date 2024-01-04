@@ -1,7 +1,7 @@
 import passport from "passport";
 import expressPromiseRouter from "express-promise-router";
 
-import { APP_NAME, CLIENT_SCOPES } from "../constants.js";
+const { APP_NAME, CLIENT_SCOPES } = process.env;
 
 const router = expressPromiseRouter();
 
@@ -27,7 +27,7 @@ router.get("/logout", (req, res, next) => {
 router.get(
   "/auth/google",
   passport.authenticate("google", {
-    scope: CLIENT_SCOPES,
+    scope: CLIENT_SCOPES.split(","),
     failureFlash: true,
     session: true,
   })
