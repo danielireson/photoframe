@@ -1,7 +1,7 @@
 import debug from "debug";
 import http from "http";
 
-import app from "./app.js";
+import app from "./app/main.js";
 import { APP_NAME } from "./constants.js";
 
 const log = debug(`${APP_NAME}:server`);

@@ -8,7 +8,7 @@ import {
   CLIENT_SECRET,
   CALLBACK_URL,
   SESSION_SECRET,
-} from "./constants.js";
+} from "../constants.js";
 
 passport.serializeUser((user, done) => done(null, user));
 

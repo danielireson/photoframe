@@ -1,7 +1,7 @@
 import passport from "passport";
 import expressPromiseRouter from "express-promise-router";
 
-import { APP_NAME, CLIENT_SCOPES } from "./constants.js";
+import { APP_NAME, CLIENT_SCOPES } from "../constants.js";
 
 const router = expressPromiseRouter();
 
