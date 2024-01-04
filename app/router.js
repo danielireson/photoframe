@@ -1,15 +1,19 @@
 import passport from "passport";
 import expressPromiseRouter from "express-promise-router";
 
+import { fetchImages } from "./service.js";
+
 const { APP_NAME, CLIENT_SCOPES } = process.env;
 
 const router = expressPromiseRouter();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   if (!req.user || !req.isAuthenticated()) {
     res.redirect("/auth/google");
   } else {
-    res.render("index", { title: APP_NAME });
+    const authToken = req.user.token;
+    const images = await fetchImages(authToken);
+    res.render("index", { title: APP_NAME, images });
   }
 });
 
