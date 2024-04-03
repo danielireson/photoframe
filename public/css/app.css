@@ -18,13 +18,13 @@ body {
   padding: 50px;
 }
 
+.stack {
+  white-space: pre-wrap;
+}
+
 .is-slideshow {
   height: 100vh;
   overflow: hidden;
-}
-
-.stack {
-  white-space: pre-wrap;
 }
 
 .slide {
