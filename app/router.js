@@ -13,7 +13,11 @@ router.get("/", async (req, res) => {
   } else {
     const authToken = req.user.token;
     const images = await fetchImages(authToken);
-    res.render("index", { title: APP_NAME, images });
+
+    res.render("index", {
+      title: APP_NAME,
+      initialData: JSON.stringify({ images }),
+    });
   }
 });
 

@@ -52,7 +52,9 @@ const fetchImagesForAlbumId = async (authToken, albumId) => {
     mediaItem?.mimeType?.startsWith("image/")
   );
 
-  return images;
+  const imageUrls = images.map((image) => image.baseUrl);
+
+  return imageUrls;
 };
 
 export const fetchImages = async (authToken) => {
