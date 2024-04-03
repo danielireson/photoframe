@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="/css/app.css" />
   </head>
   <body>
-    <div class="message">
+    <div id="app" class="is-message">
       <h1><%= message %> (<%= status %>)</h1>
       <% if (error.stack) { %>
-      <pre><%= error.stack %></pre>
+      <pre class="stack"><%= error.stack %></pre>
       <% } %>
     </div>
   </body>
