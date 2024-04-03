@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec npm start",
+    "dev": "nodemon -e env,js,css,ejs --exec npm start",
     "start": "node --env-file=.env server"
   },
   "devDependencies": {
