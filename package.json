@@ -4,7 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "nodemon --exec npm start",
     "start": "node --env-file=.env server"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
