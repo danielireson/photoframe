@@ -1,5 +1,6 @@
 const initialData = window.__INITIAL_DATA__ ?? {};
 const images = initialData.images ?? [];
+const interval = initialData.interval ?? 10000;
 const app = document.getElementById("app");
 
 let currentImageIndex = -1;
@@ -58,7 +59,7 @@ const showSlideshow = () => {
   // schedule future slides
   setInterval(() => {
     nextSlide(slide);
-  }, 2000);
+  }, interval);
 };
 
 const initializeApp = () => {

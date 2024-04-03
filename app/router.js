@@ -3,7 +3,7 @@ import expressPromiseRouter from "express-promise-router";
 
 import { fetchImages } from "./service.js";
 
-const { APP_NAME, CLIENT_SCOPES } = process.env;
+const { APP_NAME, CLIENT_SCOPES, INTERVAL } = process.env;
 
 const router = expressPromiseRouter();
 
@@ -13,10 +13,14 @@ router.get("/", async (req, res) => {
   } else {
     const authToken = req.user.token;
     const images = await fetchImages(authToken);
+    const interval = INTERVAL * 1000;
 
     res.render("index", {
       title: APP_NAME,
-      initialData: JSON.stringify({ images }),
+      initialData: JSON.stringify({
+        images,
+        interval,
+      }),
     });
   }
 });
