@@ -52,6 +52,7 @@ const fetchImagesForAlbumId = async (authToken, albumId) => {
     mediaItem?.mimeType?.startsWith("image/")
   );
 
+  // TODO: build image urls using width and height
   const imageUrls = images.map((image) => image.baseUrl);
 
   return imageUrls;
