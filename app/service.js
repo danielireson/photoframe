@@ -53,7 +53,9 @@ const fetchImagesForAlbumId = async (authToken, albumId) => {
   );
 
   // TODO: build image urls using width and height
-  const imageUrls = images.map((image) => image.baseUrl);
+  const imageUrls = images
+    .map((image) => image.baseUrl)
+    .sort(() => Math.random() - 0.5);
 
   return imageUrls;
 };
