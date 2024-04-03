@@ -1,7 +1,7 @@
 import passport from "passport";
 import expressPromiseRouter from "express-promise-router";
 
-import { fetchImages } from "./service.js";
+import { fetchImages } from "./images.js";
 
 const { APP_NAME, CLIENT_SCOPES, INTERVAL } = process.env;
 
