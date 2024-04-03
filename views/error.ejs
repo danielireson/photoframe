@@ -5,9 +5,11 @@
     <link rel="stylesheet" href="/css/app.css" />
   </head>
   <body>
-    <h1><%= message %> (<%= status %>)</h1>
-    <% if (error) { %>
-    <pre><%= error.stack %></pre>
-    <% } %>
+    <div class="message">
+      <h1><%= message %> (<%= status %>)</h1>
+      <% if (error.stack) { %>
+      <pre><%= error.stack %></pre>
+      <% } %>
+    </div>
   </body>
 </html>
