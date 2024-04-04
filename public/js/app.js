@@ -4,6 +4,7 @@ const interval = initialData.interval ?? 10000;
 const app = document.getElementById("app");
 
 let currentImageIndex = -1;
+let hasViewedAllImages = false;
 
 const showMessage = (message) => {
   // toggle message view
@@ -25,6 +26,7 @@ const incrementImageIndex = () => {
   } else {
     // end of images
     currentImageIndex = 0;
+    hasViewedAllImages = true;
   }
 };
 
@@ -32,7 +34,7 @@ const setCurrentImage = (slide) => {
   slide.style.backgroundImage = `url(${images[currentImageIndex]})`;
 
   // preload next image to avoid flicker
-  if (currentImageIndex < images.length - 1) {
+  if (currentImageIndex < images.length - 1 && !hasViewedAllImages) {
     new Image().src = images[currentImageIndex + 1];
   }
 };
