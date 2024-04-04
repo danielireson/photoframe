@@ -28,7 +28,7 @@ const fetchAlbumId = async (authToken) => {
   return album.id;
 };
 
-const fetchImagesForAlbumId = async (authToken, albumId) => {
+const fetchMediaItems = async (authToken, albumId) => {
   const response = await fetch(`${API_ENDPOINT}/v1/mediaItems:search`, {
     method: "post",
     headers: {
@@ -48,16 +48,11 @@ const fetchImagesForAlbumId = async (authToken, albumId) => {
   // TODO: handle pagination from token
   const { mediaItems } = await response.json();
 
-  const images = mediaItems.filter((mediaItem) =>
+  const imageMediaItems = mediaItems.filter((mediaItem) =>
     mediaItem?.mimeType?.startsWith("image/")
   );
 
-  // TODO: build image urls using width and height
-  const imageUrls = images
-    .map((image) => image.baseUrl)
-    .sort(() => Math.random() - 0.5);
-
-  return imageUrls;
+  return imageMediaItems;
 };
 
 export const fetchImages = async (authToken) => {
@@ -67,7 +62,13 @@ export const fetchImages = async (authToken) => {
     return [];
   }
 
-  const images = await fetchImagesForAlbumId(authToken, albumId);
+  const mediaItems = await fetchMediaItems(authToken, albumId);
+  const images = mediaItems
+    .map(
+      (mediaItem) =>
+        `${mediaItem.baseUrl}=w${mediaItem.mediaMetadata.width}-h${mediaItem.mediaMetadata.height}`
+    )
+    .sort(() => Math.random() - 0.5);
 
   return images;
 };
