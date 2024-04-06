@@ -64,7 +64,38 @@ const showSlideshow = () => {
   }, interval);
 };
 
+const enableFullscreen = () => {
+  // toggle fullscreen on click when supported
+  if (document.fullscreenEnabled) {
+    app.addEventListener("click", () => {
+      try {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen();
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  }
+};
+
+const requestNoSleep = () => {
+  // prevent sleep when supported
+  if (navigator.wakeLock) {
+    try {
+      navigator.wakeLock.request("screen");
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
 const initializeApp = () => {
+  enableFullscreen();
+  requestNoSleep();
+
   if (!images.length) {
     showMessage("No images to display");
   } else {
