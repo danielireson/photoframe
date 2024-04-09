@@ -28,6 +28,7 @@ export const initializeAuth = (app) => {
       saveUninitialized: true,
       store: new sessionFileStore(session)({}),
       secret: SESSION_SECRET,
+      cookie: { maxAge: 3600000 },
     })
   );
 
